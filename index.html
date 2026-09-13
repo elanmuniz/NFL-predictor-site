@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NFL 2026 Week 1 Predictions</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --ink: #14171c; --muted: #5f6b7a; --line: #e3e7ec;
+    --good: #1a7f4b; --bad: #b42318; --warn-bg: #fff4e0; --warn-ink: #8a5300; --chip: #eef1f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1216; --card: #171b21; --ink: #e8ecf1; --muted: #93a0b0; --line: #2a313a;
+      --good: #4cc38a; --bad: #f97066; --warn-bg: #3a2a10; --warn-ink: #f5c26b; --chip: #232932;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+  header h1 { margin: 0 0 4px; font-size: 28px; letter-spacing: -0.02em; }
+  header p { margin: 0; color: var(--muted); }
+  header a { color: inherit; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0 28px; }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; }
+  .game { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; }
+  .meta { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 12px; margin-bottom: 10px; gap: 8px; }
+  .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+  .badge.warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .badge.good { background: color-mix(in srgb, var(--good) 15%, transparent); color: var(--good); }
+  .badge.bad { background: color-mix(in srgb, var(--bad) 15%, transparent); color: var(--bad); }
+  .team { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 10px; padding: 6px 0; }
+  .team img { width: 36px; height: 36px; object-fit: contain; }
+  .team .name { font-weight: 600; }
+  .team .name small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+  .team .pct { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .team.fav .pct::after { content: " ★"; font-size: 13px; vertical-align: super; color: var(--muted); }
+  .team.lost { opacity: .55; }
+  .bar { display: flex; gap: 3px; height: 10px; margin: 8px 0 12px; }
+  .bar div:first-child { border-radius: 99px 0 0 99px; }
+  .bar div:last-child { border-radius: 0 99px 99px 0; }
+  .bar div { height: 100%; }
+  table.models { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  table.models th { color: var(--muted); font-weight: 500; text-align: right; padding: 3px 0; }
+  table.models th:first-child, table.models td:first-child { text-align: left; }
+  table.models td { text-align: right; padding: 3px 0; border-top: 1px solid var(--line); }
+  .drivers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { background: var(--chip); border-radius: 6px; padding: 2px 8px; font-size: 12px; color: var(--muted); }
+  .chip b { color: var(--ink); font-weight: 600; }
+  a.alt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 12px; padding: 8px 10px; border-radius: 8px;
+           background: var(--chip); color: var(--ink); text-decoration: none; font-size: 13px; }
+  a.alt span { color: var(--muted); }
+  a.alt b { font-size: 15px; font-variant-numeric: tabular-nums; }
+  a.alt .alt-meta { margin-left: auto; font-variant-numeric: tabular-nums; }
+  footer { margin-top: 36px; color: var(--muted); font-size: 13px; }
+  footer table { border-collapse: collapse; margin-top: 8px; font-variant-numeric: tabular-nums; }
+  footer td, footer th { padding: 3px 14px 3px 0; text-align: left; }
+</style>
+</head>
+<body>
+<style>
+  .site-nav { --nav-bg: #ffffff; --nav-ink: #14171c; --nav-muted: #5f6b7a; --nav-line: #e3e7ec; --nav-accent: #2a78d6;
+    background: var(--nav-bg); border-bottom: 1px solid var(--nav-line); position: sticky; top: 0; z-index: 10;
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .site-nav { --nav-bg: #171b21; --nav-ink: #e8ecf1; --nav-muted: #93a0b0; --nav-line: #2a313a; --nav-accent: #3987e5; }
+  }
+  .site-nav .inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .site-nav .brand { font-weight: 800; color: var(--nav-ink); text-decoration: none; margin-right: 14px; white-space: nowrap; padding: 12px 0; }
+  .site-nav a.tab { color: var(--nav-muted); text-decoration: none; padding: 12px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .site-nav a.tab:hover { color: var(--nav-ink); }
+  .site-nav a.tab.active { color: var(--nav-ink); border-bottom-color: var(--nav-accent); font-weight: 600; }
+</style>
+<nav class="site-nav" aria-label="Site">
+  <div class="inner">
+    <a class="brand" href="index.html">🏈 NFL Predictor</a>
+    
+    <a class="tab active" href="index.html">This week</a>
+    
+    <a class="tab" href="spreads.html">Safe spreads</a>
+    
+    <a class="tab" href="tracker.html">Tracker</a>
+    
+    <a class="tab" href="trends.html">Trends</a>
+    
+  </div>
+</nav>
+<main>
+  <header>
+    <h1>2026 Week 1 — Win Probabilities</h1>
+    <p>Generated Sep 13, 2026 9:46 AM · Data through Sep 10, 2026</p>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><span>Games</span><b>16</b></div>
+    <div class="stat"><span>Picks this week</span><b>1–1</b></div>
+    <div class="stat"><span>Vegas disagreements</span><b>5</b></div>
+    <div class="stat"><span>Market model (backtest)</span><b>66.2%</b></div><div class="stat"><span>Analytics model (backtest)</span><b>65.0%</b></div>
+  </section>
+
+  <section class="grid">
+  
+    <article class="game">
+      <div class="meta">
+        <span>Wed Sep 9 · 8:20 PM ET</span>
+        
+          <span class="badge good">Final 10–13 · Pick ✓ · backtest</span>
+        
+      </div>
+      
+      <div class="team lost">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ne.png" alt="">
+        <div class="name">New England Patriots<small>Away · QB Drake Maye · +3</small></div>
+        <div class="pct">39.2%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/sea.png" alt="">
+        <div class="name">Seattle Seahawks<small>Home · QB Sam Darnold · -3</small></div>
+        <div class="pct">60.8%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="New England Patriots 39.2%, Seattle Seahawks 60.8%">
+        <div style="flex: 39.2 1 0; background: #002244"></div>
+        <div style="flex: 60.8 1 0; background: #69be28"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>NE</th><th>SEA</th></tr>
+        
+        <tr><td>Market model</td><td>39.2%</td><td>60.8%</td></tr>
+        
+        <tr><td>Analytics model</td><td>35.1%</td><td>64.9%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>40.0%</td><td>60.0%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>SEA +9.5</b>
+        <span class="alt-meta">85% · fair -575 · covered ✓</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>SEA</b></span><span class="chip">Elo rating → <b>SEA</b></span><span class="chip">Recent point differential → <b>SEA</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Thu Sep 10 · 8:35 PM ET · Neutral site</span>
+        
+          <span class="badge bad">Final 27–7 · Pick ✗ · backtest</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/sf.png" alt="">
+        <div class="name">San Francisco 49ers<small>Away · QB Brock Purdy · +3.5</small></div>
+        <div class="pct">33.8%</div>
+      </div>
+      
+      <div class="team fav lost">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/lar.png" alt="">
+        <div class="name">Los Angeles Rams<small>Home · QB Matthew Stafford · -3.5</small></div>
+        <div class="pct">66.2%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="San Francisco 49ers 33.8%, Los Angeles Rams 66.2%">
+        <div style="flex: 33.8 1 0; background: #AA0000"></div>
+        <div style="flex: 66.2 1 0; background: #003594"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>SF</th><th>LA</th></tr>
+        
+        <tr><td>Market model</td><td>33.8%</td><td>66.2%</td></tr>
+        
+        <tr><td>Analytics model</td><td>39.9%</td><td>60.1%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>34.3%</td><td>65.7%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>LA +8.5</b>
+        <span class="alt-meta">85% · fair -584 · missed ✗</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Recent point differential → <b>LA</b></span><span class="chip">Elo rating → <b>LA</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>LA</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/atl.png" alt="">
+        <div class="name">Atlanta Falcons<small>Away · QB Cooper Rush · +6.5</small></div>
+        <div class="pct">28.3%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/pit.png" alt="">
+        <div class="name">Pittsburgh Steelers<small>Home · QB Aaron Rodgers · -6.5</small></div>
+        <div class="pct">71.7%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Atlanta Falcons 28.3%, Pittsburgh Steelers 71.7%">
+        <div style="flex: 28.3 1 0; background: #A71930"></div>
+        <div style="flex: 71.7 1 0; background: #000000"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>ATL</th><th>PIT</th></tr>
+        
+        <tr><td>Market model</td><td>28.3%</td><td>71.7%</td></tr>
+        
+        <tr><td>Analytics model</td><td>32.3%</td><td>67.7%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>29.0%</td><td>71.0%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>PIT +6.5</b>
+        <span class="alt-meta">87% · fair -697</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>PIT</b></span><span class="chip">ATL QB change → <b>PIT</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>PIT</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/bal.png" alt="">
+        <div class="name">Baltimore Ravens<small>Away · QB Lamar Jackson · -3.5</small></div>
+        <div class="pct">61.4%</div>
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ind.png" alt="">
+        <div class="name">Indianapolis Colts<small>Home · QB Daniel Jones · +3.5</small></div>
+        <div class="pct">38.6%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Baltimore Ravens 61.4%, Indianapolis Colts 38.6%">
+        <div style="flex: 61.4 1 0; background: #241773"></div>
+        <div style="flex: 38.6 1 0; background: #a5acaf"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>BAL</th><th>IND</th></tr>
+        
+        <tr><td>Market model</td><td>61.4%</td><td>38.6%</td></tr>
+        
+        <tr><td>Analytics model</td><td>60.3%</td><td>39.7%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>60.9%</td><td>39.1%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>BAL +8.5</b>
+        <span class="alt-meta">85% · fair -586</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>IND</b></span><span class="chip">IND QB change → <b>BAL</b></span><span class="chip">Elo rating → <b>BAL</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+          <span class="badge warn">Model disagrees with Vegas</span>
+        
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/buf.png" alt="">
+        <div class="name">Buffalo Bills<small>Away · QB Josh Allen · -1.5</small></div>
+        <div class="pct">50.3%</div>
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/hou.png" alt="">
+        <div class="name">Houston Texans<small>Home · QB C.J. Stroud · +1.5</small></div>
+        <div class="pct">49.7%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Buffalo Bills 50.3%, Houston Texans 49.7%">
+        <div style="flex: 50.3 1 0; background: #00338D"></div>
+        <div style="flex: 49.7 1 0; background: #03202F"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>BUF</th><th>HOU</th></tr>
+        
+        <tr><td>Market model</td><td>50.3%</td><td>49.7%</td></tr>
+        
+        <tr><td>Analytics model</td><td>48.2%</td><td>51.8%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>50.4%</td><td>49.6%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>BUF +11.5</b>
+        <span class="alt-meta">85% · fair -571</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>HOU</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>BUF</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/chi.png" alt="">
+        <div class="name">Chicago Bears<small>Away · QB Caleb Williams · -3</small></div>
+        <div class="pct">61.3%</div>
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500-dark/car.png" alt="">
+        <div class="name">Carolina Panthers<small>Home · QB Bryce Young · +3</small></div>
+        <div class="pct">38.7%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Chicago Bears 61.3%, Carolina Panthers 38.7%">
+        <div style="flex: 61.3 1 0; background: #0B162A"></div>
+        <div style="flex: 38.7 1 0; background: #0085CA"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>CHI</th><th>CAR</th></tr>
+        
+        <tr><td>Market model</td><td>61.3%</td><td>38.7%</td></tr>
+        
+        <tr><td>Analytics model</td><td>58.2%</td><td>41.8%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>60.9%</td><td>39.1%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>CHI +10.5</b>
+        <span class="alt-meta">87% · fair -684</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>CAR</b></span><span class="chip">Elo rating → <b>CHI</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>CHI</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/cle.png" alt="">
+        <div class="name">Cleveland Browns<small>Away · QB Deshaun Watson · +8.5</small></div>
+        <div class="pct">19.9%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/jax.png" alt="">
+        <div class="name">Jacksonville Jaguars<small>Home · QB Trevor Lawrence · -8.5</small></div>
+        <div class="pct">80.1%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Cleveland Browns 19.9%, Jacksonville Jaguars 80.1%">
+        <div style="flex: 19.9 1 0; background: #FF3C00"></div>
+        <div style="flex: 80.1 1 0; background: #006778"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>CLE</th><th>JAX</th></tr>
+        
+        <tr><td>Market model</td><td>19.9%</td><td>80.1%</td></tr>
+        
+        <tr><td>Analytics model</td><td>16.1%</td><td>83.9%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>21.3%</td><td>78.7%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>JAX +3.5</b>
+        <span class="alt-meta">86% · fair -609</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Recent point differential → <b>JAX</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>JAX</b></span><span class="chip">Elo rating → <b>JAX</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/no.png" alt="">
+        <div class="name">New Orleans Saints<small>Away · QB Tyler Shough · +7</small></div>
+        <div class="pct">25.7%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/det.png" alt="">
+        <div class="name">Detroit Lions<small>Home · QB Jared Goff · -7</small></div>
+        <div class="pct">74.3%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="New Orleans Saints 25.7%, Detroit Lions 74.3%">
+        <div style="flex: 25.7 1 0; background: #D3BC8D"></div>
+        <div style="flex: 74.3 1 0; background: #0076B6"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>NO</th><th>DET</th></tr>
+        
+        <tr><td>Market model</td><td>25.7%</td><td>74.3%</td></tr>
+        
+        <tr><td>Analytics model</td><td>28.2%</td><td>71.8%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>26.6%</td><td>73.4%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>DET +5.5</b>
+        <span class="alt-meta">86% · fair -600</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">QB efficiency (EPA/dropback) → <b>DET</b></span><span class="chip">Home field → <b>DET</b></span><span class="chip">Elo rating → <b>DET</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png" alt="">
+        <div class="name">New York Jets<small>Away · QB Geno Smith · +1.5</small></div>
+        <div class="pct">47.8%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ten.png" alt="">
+        <div class="name">Tennessee Titans<small>Home · QB Cam Ward · -1.5</small></div>
+        <div class="pct">52.2%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="New York Jets 47.8%, Tennessee Titans 52.2%">
+        <div style="flex: 47.8 1 0; background: #003F2D"></div>
+        <div style="flex: 52.2 1 0; background: #4495D2"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>NYJ</th><th>TEN</th></tr>
+        
+        <tr><td>Market model</td><td>47.8%</td><td>52.2%</td></tr>
+        
+        <tr><td>Analytics model</td><td>42.9%</td><td>57.1%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>48.3%</td><td>51.7%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>TEN +11.5</b>
+        <span class="alt-meta">85% · fair -586</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>TEN</b></span><span class="chip">Recent point differential → <b>TEN</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>NYJ</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 1:00 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/tb.png" alt="">
+        <div class="name">Tampa Bay Buccaneers<small>Away · QB Baker Mayfield · +3.5</small></div>
+        <div class="pct">35.1%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/cin.png" alt="">
+        <div class="name">Cincinnati Bengals<small>Home · QB Joe Burrow · -3.5</small></div>
+        <div class="pct">64.9%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Tampa Bay Buccaneers 35.1%, Cincinnati Bengals 64.9%">
+        <div style="flex: 35.1 1 0; background: #A71930"></div>
+        <div style="flex: 64.9 1 0; background: #FB4F14"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>TB</th><th>CIN</th></tr>
+        
+        <tr><td>Market model</td><td>35.1%</td><td>64.9%</td></tr>
+        
+        <tr><td>Analytics model</td><td>39.4%</td><td>60.6%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>35.5%</td><td>64.5%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>CIN +8.5</b>
+        <span class="alt-meta">85% · fair -585</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>CIN</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>CIN</b></span><span class="chip">Recent point differential → <b>CIN</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 4:25 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ari.png" alt="">
+        <div class="name">Arizona Cardinals<small>Away · QB Jacoby Brissett · +9.5</small></div>
+        <div class="pct">18.9%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/lac.png" alt="">
+        <div class="name">Los Angeles Chargers<small>Home · QB Justin Herbert · -9.5</small></div>
+        <div class="pct">81.1%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Arizona Cardinals 18.9%, Los Angeles Chargers 81.1%">
+        <div style="flex: 18.9 1 0; background: #97233F"></div>
+        <div style="flex: 81.1 1 0; background: #007BC7"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>ARI</th><th>LAC</th></tr>
+        
+        <tr><td>Market model</td><td>18.9%</td><td>81.1%</td></tr>
+        
+        <tr><td>Analytics model</td><td>28.2%</td><td>71.8%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>19.6%</td><td>80.4%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>LAC +3.5</b>
+        <span class="alt-meta">87% · fair -685</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Elo rating → <b>LAC</b></span><span class="chip">Recent point differential → <b>LAC</b></span><span class="chip">Home field → <b>LAC</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 4:25 PM ET</span>
+        
+          <span class="badge warn">Model disagrees with Vegas</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/gb.png" alt="">
+        <div class="name">Green Bay Packers<small>Away · QB Jordan Love · +2.5</small></div>
+        <div class="pct">45.9%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/min.png" alt="">
+        <div class="name">Minnesota Vikings<small>Home · QB Kyler Murray · -2.5</small></div>
+        <div class="pct">54.1%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Green Bay Packers 45.9%, Minnesota Vikings 54.1%">
+        <div style="flex: 45.9 1 0; background: #203731"></div>
+        <div style="flex: 54.1 1 0; background: #4F2683"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>GB</th><th>MIN</th></tr>
+        
+        <tr><td>Market model</td><td>45.9%</td><td>54.1%</td></tr>
+        
+        <tr><td>Analytics model</td><td>51.4%</td><td>48.6%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>45.7%</td><td>54.3%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>MIN +10.5</b>
+        <span class="alt-meta">86% · fair -628</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>MIN</b></span><span class="chip">MIN QB change → <b>GB</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>GB</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 4:25 PM ET</span>
+        
+          <span class="badge warn">Model disagrees with Vegas</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/mia.png" alt="">
+        <div class="name">Miami Dolphins<small>Away · QB Malik Willis · +3</small></div>
+        <div class="pct">39.7%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/lv.png" alt="">
+        <div class="name">Las Vegas Raiders<small>Home · QB Kirk Cousins · -3</small></div>
+        <div class="pct">60.3%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Miami Dolphins 39.7%, Las Vegas Raiders 60.3%">
+        <div style="flex: 39.7 1 0; background: #008E97"></div>
+        <div style="flex: 60.3 1 0; background: #000000"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>MIA</th><th>LV</th></tr>
+        
+        <tr><td>Market model</td><td>39.7%</td><td>60.3%</td></tr>
+        
+        <tr><td>Analytics model</td><td>57.8%</td><td>42.2%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>39.1%</td><td>60.9%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>LV +10.5</b>
+        <span class="alt-meta">87% · fair -658</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>LV</b></span><span class="chip">Elo rating → <b>MIA</b></span><span class="chip">Recent point differential → <b>MIA</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 4:25 PM ET</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png" alt="">
+        <div class="name">Washington Commanders<small>Away · QB Jayden Daniels · +6</small></div>
+        <div class="pct">29.8%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/phi.png" alt="">
+        <div class="name">Philadelphia Eagles<small>Home · QB Jalen Hurts · -6</small></div>
+        <div class="pct">70.2%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Washington Commanders 29.8%, Philadelphia Eagles 70.2%">
+        <div style="flex: 29.8 1 0; background: #5A1414"></div>
+        <div style="flex: 70.2 1 0; background: #004C54"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>WAS</th><th>PHI</th></tr>
+        
+        <tr><td>Market model</td><td>29.8%</td><td>70.2%</td></tr>
+        
+        <tr><td>Analytics model</td><td>26.6%</td><td>73.4%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>30.9%</td><td>69.1%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>PHI +6.5</b>
+        <span class="alt-meta">87% · fair -665</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>PHI</b></span><span class="chip">Recent point differential → <b>PHI</b></span><span class="chip">WAS QB change → <b>PHI</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Sun Sep 13 · 8:20 PM ET</span>
+        
+          <span class="badge warn">Model disagrees with Vegas</span>
+        
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/dal.png" alt="">
+        <div class="name">Dallas Cowboys<small>Away · QB Dak Prescott · -3</small></div>
+        <div class="pct">58.8%</div>
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png" alt="">
+        <div class="name">New York Giants<small>Home · QB Jaxson Dart · +3</small></div>
+        <div class="pct">41.2%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Dallas Cowboys 58.8%, New York Giants 41.2%">
+        <div style="flex: 58.8 1 0; background: #002244"></div>
+        <div style="flex: 41.2 1 0; background: #A71930"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>DAL</th><th>NYG</th></tr>
+        
+        <tr><td>Market model</td><td>58.8%</td><td>41.2%</td></tr>
+        
+        <tr><td>Analytics model</td><td>43.6%</td><td>56.4%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>59.3%</td><td>40.7%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>DAL +10.5</b>
+        <span class="alt-meta">87% · fair -660</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Home field → <b>NYG</b></span><span class="chip">QB efficiency (EPA/dropback) → <b>DAL</b></span><span class="chip">DAL QB change → <b>NYG</b></span>
+      </div>
+      
+    </article>
+  
+    <article class="game">
+      <div class="meta">
+        <span>Mon Sep 14 · 8:15 PM ET</span>
+        
+          <span class="badge warn">Model disagrees with Vegas</span>
+        
+      </div>
+      
+      <div class="team">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/den.png" alt="">
+        <div class="name">Denver Broncos<small>Away · QB Bo Nix · +2.5</small></div>
+        <div class="pct">45.1%</div>
+      </div>
+      
+      <div class="team fav">
+        <img src="https://a.espncdn.com/i/teamlogos/nfl/500/kc.png" alt="">
+        <div class="name">Kansas City Chiefs<small>Home · QB Patrick Mahomes · -2.5</small></div>
+        <div class="pct">54.9%</div>
+      </div>
+      
+      <div class="bar" role="img" aria-label="Denver Broncos 45.1%, Kansas City Chiefs 54.9%">
+        <div style="flex: 45.1 1 0; background: #002244"></div>
+        <div style="flex: 54.9 1 0; background: #E31837"></div>
+      </div>
+      <table class="models">
+        <tr><th>Model</th><th>DEN</th><th>KC</th></tr>
+        
+        <tr><td>Market model</td><td>45.1%</td><td>54.9%</td></tr>
+        
+        <tr><td>Analytics model</td><td>52.9%</td><td>47.1%</td></tr>
+        
+        <tr><td>Vegas implied</td><td>44.9%</td><td>55.1%</td></tr>
+        
+      </table>
+      
+      <a class="alt" href="weeks/2026_week01_spreads.html">
+        <span>Safe alt spread (85%)</span>
+        <b>KC +10.5</b>
+        <span class="alt-meta">86% · fair -625</span>
+      </a>
+      
+      
+      <div class="drivers">
+        <span class="chip">Elo rating → <b>DEN</b></span><span class="chip">Home field → <b>KC</b></span><span class="chip">Recent point differential → <b>DEN</b></span>
+      </div>
+      
+    </article>
+  
+  </section>
+
+  <footer>
+    <p><b>How to read this.</b> The headline percentage is the <b>market model</b> (Vegas line blended with the analytics model) when a line is posted,
+    otherwise the pure <b>analytics model</b> (Elo, recency-weighted point differential, starting-QB EPA per dropback, QB changes, rest, home field).
+    Chips show the strongest analytics factors and which team they favor. ★ marks the favorite.</p>
+    <p>Backtest: every season 2014–2025 predicted by a model trained only on earlier seasons.</p>
+    <table>
+      <tr><th>Model</th><th>Accuracy</th><th>Log loss</th><th>Games</th></tr>
+      <tr><td>Vegas implied</td><td>66.3%</td><td>0.6110</td><td>3284</td></tr><tr><td>Market model</td><td>66.2%</td><td>0.6112</td><td>3284</td></tr><tr><td>Analytics model</td><td>65.0%</td><td>0.6238</td><td>3284</td></tr><tr><td>Elo only</td><td>64.8%</td><td>0.6320</td><td>3284</td></tr><tr><td>Always pick home</td><td>55.2%</td><td>0.6881</td><td>3284</td></tr>
+    </table>
+  </footer>
+</main>
+</body>
+</html>

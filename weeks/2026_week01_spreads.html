@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Safe Alternate Spreads · 2026 Week 1</title>
+<style>
+  :root { --bg: #f6f7f9; --card: #ffffff; --ink: #14171c; --muted: #5f6b7a; --line: #e3e7ec; --chip: #eef1f5;
+          --good: #1a7f4b; --bad: #b42318; --accent: #2a78d6; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1216; --card: #171b21; --ink: #e8ecf1; --muted: #93a0b0; --line: #2a313a; --chip: #232932;
+            --good: #4cc38a; --bad: #f97066; --accent: #3987e5; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+  a { color: var(--accent); }
+  h1 { margin: 0 0 4px; font-size: 28px; letter-spacing: -0.02em; }
+  h2 { font-size: 19px; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 16px; max-width: 80ch; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0 24px; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; }
+  .tile b { display: block; font-size: 24px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .tile span { color: var(--muted); font-size: 13px; }
+  section.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; margin: 0 0 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
+  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  td.num, th.num { text-align: right; }
+  .team { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .team img { width: 26px; height: 26px; object-fit: contain; }
+  .team small { color: var(--muted); font-weight: 400; }
+  .line { font-size: 17px; font-weight: 700; }
+  .muted { color: var(--muted); }
+  .ok { color: var(--good); font-weight: 600; }
+  .miss { color: var(--bad); font-weight: 600; }
+  .ladder { display: flex; gap: 6px; }
+  .ladder span { background: var(--chip); border-radius: 6px; padding: 2px 7px; font-size: 12px; color: var(--muted); }
+  .ladder span b { color: var(--ink); }
+  .ladder span.hl { outline: 1.5px solid var(--accent); }
+  .how p { margin: 6px 0; color: var(--muted); max-width: 90ch; }
+  .how b { color: var(--ink); }
+  .note { font-size: 13px; color: var(--muted); margin-top: 18px; max-width: 90ch; }
+</style>
+</head>
+<body>
+<style>
+  .site-nav { --nav-bg: #ffffff; --nav-ink: #14171c; --nav-muted: #5f6b7a; --nav-line: #e3e7ec; --nav-accent: #2a78d6;
+    background: var(--nav-bg); border-bottom: 1px solid var(--nav-line); position: sticky; top: 0; z-index: 10;
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .site-nav { --nav-bg: #171b21; --nav-ink: #e8ecf1; --nav-muted: #93a0b0; --nav-line: #2a313a; --nav-accent: #3987e5; }
+  }
+  .site-nav .inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .site-nav .brand { font-weight: 800; color: var(--nav-ink); text-decoration: none; margin-right: 14px; white-space: nowrap; padding: 12px 0; }
+  .site-nav a.tab { color: var(--nav-muted); text-decoration: none; padding: 12px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .site-nav a.tab:hover { color: var(--nav-ink); }
+  .site-nav a.tab.active { color: var(--nav-ink); border-bottom-color: var(--nav-accent); font-weight: 600; }
+</style>
+<nav class="site-nav" aria-label="Site">
+  <div class="inner">
+    <a class="brand" href="../index.html">🏈 NFL Predictor</a>
+    
+    <a class="tab" href="../index.html">This week</a>
+    
+    <a class="tab" href="../spreads.html">Safe spreads</a>
+    
+    <a class="tab" href="../tracker.html">Tracker</a>
+    
+    <a class="tab" href="../trends.html">Trends</a>
+    
+  </div>
+</nav>
+<main>
+  <h1>Safe Alternate Spreads · 2026 Week 1</h1>
+  <p class="sub">For each game, the tightest alternate spread on the model's pick with at least a <b>85%</b> chance to cover,
+  plus a 90% "extra safe" line. Half-point lines, so they can't push. Updated Sep 13, 2026 9:46 AM.</p>
+
+  <div class="tiles">
+    
+    <div class="tile"><b>87.0%</b><span>of 85% lines covered in the 2014–2025 backtest (3,284 games)</span></div>
+    <div class="tile"><b>+13.1 pts</b><span>average cushion vs. the main spread at 85%</span></div>
+    
+    
+    <div class="tile"><b>1-1</b><span>covered this week so far</span></div>
+  </div>
+
+  <section class="card">
+    <div class="table-wrap"><table>
+      <tr><th>Kickoff</th><th>Pick</th><th class="num">Main line</th><th class="num">Safe line (85%)</th><th class="num">Fair odds</th><th class="num">Extra safe (90%)</th><th>Ladder: line @ cover chance</th><th>Result</th></tr>
+      
+      <tr>
+        <td class="muted">Wed 8:20 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/sea.png" alt="">SEA <small>vs NE</small></div></td>
+        <td class="num">-3</td>
+        <td class="num line">+9.5 <small class="muted">85%</small></td>
+        <td class="num">-575</td>
+        <td class="num">+14.5 <small class="muted">91% · -1072</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 72% · fair -256"><b>+3.5</b> 72%</span><span title="80% target: +7.5 covers 83% · fair -495"><b>+7.5</b> 83%</span><span class="hl" title="85% target: +9.5 covers 85% · fair -575"><b>+9.5</b> 85%</span><span title="90% target: +14.5 covers 91% · fair -1072"><b>+14.5</b> 91%</span></div></td>
+        <td><span class="ok">✓ won by 3</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Thu 8:35 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/lar.png" alt="">LA <small>vs SF</small></div></td>
+        <td class="num">-3.5</td>
+        <td class="num line">+8.5 <small class="muted">85%</small></td>
+        <td class="num">-584</td>
+        <td class="num">+13.5 <small class="muted">90% · -916</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 73% · fair -270"><b>+3.5</b> 73%</span><span title="80% target: +7.5 covers 84% · fair -524"><b>+7.5</b> 84%</span><span class="hl" title="85% target: +8.5 covers 85% · fair -584"><b>+8.5</b> 85%</span><span title="90% target: +13.5 covers 90% · fair -916"><b>+13.5</b> 90%</span></div></td>
+        <td><span class="miss">✗ lost by 20</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/pit.png" alt="">PIT <small>vs ATL</small></div></td>
+        <td class="num">-6.5</td>
+        <td class="num line">+6.5 <small class="muted">87%</small></td>
+        <td class="num">-697</td>
+        <td class="num">+8.5 <small class="muted">91% · -974</small></td>
+        <td><div class="ladder"><span title="70% target: -0.5 covers 73% · fair -265"><b>-0.5</b> 73%</span><span title="80% target: +3.5 covers 82% · fair -455"><b>+3.5</b> 82%</span><span class="hl" title="85% target: +6.5 covers 87% · fair -697"><b>+6.5</b> 87%</span><span title="90% target: +8.5 covers 91% · fair -974"><b>+8.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/bal.png" alt="">BAL <small>@ IND</small></div></td>
+        <td class="num">-3.5</td>
+        <td class="num line">+8.5 <small class="muted">85%</small></td>
+        <td class="num">-586</td>
+        <td class="num">+13.5 <small class="muted">90% · -919</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 73% · fair -271"><b>+3.5</b> 73%</span><span title="80% target: +7.5 covers 84% · fair -526"><b>+7.5</b> 84%</span><span class="hl" title="85% target: +8.5 covers 85% · fair -586"><b>+8.5</b> 85%</span><span title="90% target: +13.5 covers 90% · fair -919"><b>+13.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/buf.png" alt="">BUF <small>@ HOU</small></div></td>
+        <td class="num">-1.5</td>
+        <td class="num line">+11.5 <small class="muted">85%</small></td>
+        <td class="num">-571</td>
+        <td class="num">+16.5 <small class="muted">91% · -956</small></td>
+        <td><div class="ladder"><span title="70% target: +5.5 covers 71% · fair -243"><b>+5.5</b> 71%</span><span title="80% target: +8.5 covers 80% · fair -410"><b>+8.5</b> 80%</span><span class="hl" title="85% target: +11.5 covers 85% · fair -571"><b>+11.5</b> 85%</span><span title="90% target: +16.5 covers 91% · fair -956"><b>+16.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/chi.png" alt="">CHI <small>@ CAR</small></div></td>
+        <td class="num">-3</td>
+        <td class="num line">+10.5 <small class="muted">87%</small></td>
+        <td class="num">-684</td>
+        <td class="num">+14.5 <small class="muted">91% · -1050</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 72% · fair -251"><b>+3.5</b> 72%</span><span title="80% target: +7.5 covers 83% · fair -485"><b>+7.5</b> 83%</span><span class="hl" title="85% target: +10.5 covers 87% · fair -684"><b>+10.5</b> 87%</span><span title="90% target: +14.5 covers 91% · fair -1050"><b>+14.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/jax.png" alt="">JAX <small>vs CLE</small></div></td>
+        <td class="num">-8.5</td>
+        <td class="num line">+3.5 <small class="muted">86%</small></td>
+        <td class="num">-609</td>
+        <td class="num">+7.5 <small class="muted">92% · -1215</small></td>
+        <td><div class="ladder"><span title="70% target: -2.5 covers 73% · fair -271"><b>-2.5</b> 73%</span><span title="80% target: +2.5 covers 81% · fair -419"><b>+2.5</b> 81%</span><span class="hl" title="85% target: +3.5 covers 86% · fair -609"><b>+3.5</b> 86%</span><span title="90% target: +7.5 covers 92% · fair -1215"><b>+7.5</b> 92%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/det.png" alt="">DET <small>vs NO</small></div></td>
+        <td class="num">-7</td>
+        <td class="num line">+5.5 <small class="muted">86%</small></td>
+        <td class="num">-600</td>
+        <td class="num">+7.5 <small class="muted">90% · -945</small></td>
+        <td><div class="ladder"><span title="70% target: -1.5 covers 71% · fair -249"><b>-1.5</b> 71%</span><span title="80% target: +3.5 covers 83% · fair -483"><b>+3.5</b> 83%</span><span class="hl" title="85% target: +5.5 covers 86% · fair -600"><b>+5.5</b> 86%</span><span title="90% target: +7.5 covers 90% · fair -945"><b>+7.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/ten.png" alt="">TEN <small>vs NYJ</small></div></td>
+        <td class="num">-1.5</td>
+        <td class="num line">+11.5 <small class="muted">85%</small></td>
+        <td class="num">-586</td>
+        <td class="num">+15.5 <small class="muted">90% · -908</small></td>
+        <td><div class="ladder"><span title="70% target: +5.5 covers 71% · fair -250"><b>+5.5</b> 71%</span><span title="80% target: +8.5 covers 81% · fair -423"><b>+8.5</b> 81%</span><span class="hl" title="85% target: +11.5 covers 85% · fair -586"><b>+11.5</b> 85%</span><span title="90% target: +15.5 covers 90% · fair -908"><b>+15.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 1:00 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/cin.png" alt="">CIN <small>vs TB</small></div></td>
+        <td class="num">-3.5</td>
+        <td class="num line">+8.5 <small class="muted">85%</small></td>
+        <td class="num">-585</td>
+        <td class="num">+13.5 <small class="muted">90% · -918</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 73% · fair -271"><b>+3.5</b> 73%</span><span title="80% target: +7.5 covers 84% · fair -525"><b>+7.5</b> 84%</span><span class="hl" title="85% target: +8.5 covers 85% · fair -585"><b>+8.5</b> 85%</span><span title="90% target: +13.5 covers 90% · fair -918"><b>+13.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 4:25 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/lac.png" alt="">LAC <small>vs ARI</small></div></td>
+        <td class="num">-9.5</td>
+        <td class="num line">+3.5 <small class="muted">87%</small></td>
+        <td class="num">-685</td>
+        <td class="num">+6.5 <small class="muted">91% · -987</small></td>
+        <td><div class="ladder"><span title="70% target: -2.5 covers 75% · fair -295"><b>-2.5</b> 75%</span><span title="80% target: +1.5 covers 81% · fair -423"><b>+1.5</b> 81%</span><span class="hl" title="85% target: +3.5 covers 87% · fair -685"><b>+3.5</b> 87%</span><span title="90% target: +6.5 covers 91% · fair -987"><b>+6.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 4:25 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/min.png" alt="">MIN <small>vs GB</small></div></td>
+        <td class="num">-2.5</td>
+        <td class="num line">+10.5 <small class="muted">86%</small></td>
+        <td class="num">-628</td>
+        <td class="num">+14.5 <small class="muted">91% · -955</small></td>
+        <td><div class="ladder"><span title="70% target: +4.5 covers 72% · fair -258"><b>+4.5</b> 72%</span><span title="80% target: +7.5 covers 81% · fair -436"><b>+7.5</b> 81%</span><span class="hl" title="85% target: +10.5 covers 86% · fair -628"><b>+10.5</b> 86%</span><span title="90% target: +14.5 covers 91% · fair -955"><b>+14.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 4:25 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/lv.png" alt="">LV <small>vs MIA</small></div></td>
+        <td class="num">-3</td>
+        <td class="num line">+10.5 <small class="muted">87%</small></td>
+        <td class="num">-658</td>
+        <td class="num">+14.5 <small class="muted">91% · -1004</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 71% · fair -241"><b>+3.5</b> 71%</span><span title="80% target: +7.5 covers 82% · fair -463"><b>+7.5</b> 82%</span><span class="hl" title="85% target: +10.5 covers 87% · fair -658"><b>+10.5</b> 87%</span><span title="90% target: +14.5 covers 91% · fair -1004"><b>+14.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 4:25 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/phi.png" alt="">PHI <small>vs WAS</small></div></td>
+        <td class="num">-6</td>
+        <td class="num line">+6.5 <small class="muted">87%</small></td>
+        <td class="num">-665</td>
+        <td class="num">+8.5 <small class="muted">90% · -934</small></td>
+        <td><div class="ladder"><span title="70% target: -0.5 covers 72% · fair -251"><b>-0.5</b> 72%</span><span title="80% target: +3.5 covers 81% · fair -433"><b>+3.5</b> 81%</span><span class="hl" title="85% target: +6.5 covers 87% · fair -665"><b>+6.5</b> 87%</span><span title="90% target: +8.5 covers 90% · fair -934"><b>+8.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Sun 8:20 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/dal.png" alt="">DAL <small>@ NYG</small></div></td>
+        <td class="num">-3</td>
+        <td class="num line">+10.5 <small class="muted">87%</small></td>
+        <td class="num">-660</td>
+        <td class="num">+14.5 <small class="muted">91% · -1009</small></td>
+        <td><div class="ladder"><span title="70% target: +3.5 covers 71% · fair -242"><b>+3.5</b> 71%</span><span title="80% target: +7.5 covers 82% · fair -465"><b>+7.5</b> 82%</span><span class="hl" title="85% target: +10.5 covers 87% · fair -660"><b>+10.5</b> 87%</span><span title="90% target: +14.5 covers 91% · fair -1009"><b>+14.5</b> 91%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+      <tr>
+        <td class="muted">Mon 8:15 PM</td>
+        <td><div class="team"><img src="https://a.espncdn.com/i/teamlogos/nfl/500/kc.png" alt="">KC <small>vs DEN</small></div></td>
+        <td class="num">-2.5</td>
+        <td class="num line">+10.5 <small class="muted">86%</small></td>
+        <td class="num">-625</td>
+        <td class="num">+14.5 <small class="muted">90% · -951</small></td>
+        <td><div class="ladder"><span title="70% target: +4.5 covers 72% · fair -257"><b>+4.5</b> 72%</span><span title="80% target: +7.5 covers 81% · fair -434"><b>+7.5</b> 81%</span><span class="hl" title="85% target: +10.5 covers 86% · fair -625"><b>+10.5</b> 86%</span><span title="90% target: +14.5 covers 90% · fair -951"><b>+14.5</b> 90%</span></div></td>
+        <td><span class="muted">—</span></td>
+      </tr>
+      
+    </table></div>
+  </section>
+
+  
+  <section class="card">
+    <h2>Does "85%" really mean 85%?</h2>
+    <p class="sub">Walk-forward backtest, 2014–2025: each season's lines were built only from earlier seasons, on the model's out-of-sample pick.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Target</th><th class="num">Predicted cover</th><th class="num">Actual cover</th><th class="num">Avg. alt line</th><th class="num">Avg. cushion</th><th class="num">Break-even odds</th><th class="num">Games</th></tr>
+      <tr><td>70%</td><td class="num">72.1%</td><td class="num">72.6%</td><td class="num">+1.6</td><td class="num">+6.9</td><td class="num">-265</td><td class="num">3,284</td></tr><tr><td>80%</td><td class="num">81.9%</td><td class="num">82.8%</td><td class="num">+5.4</td><td class="num">+10.7</td><td class="num">-481</td><td class="num">3,284</td></tr><tr><td>85%</td><td class="num">86.1%</td><td class="num">87.0%</td><td class="num">+7.9</td><td class="num">+13.1</td><td class="num">-669</td><td class="num">3,284</td></tr><tr><td>90%</td><td class="num">90.8%</td><td class="num">91.1%</td><td class="num">+11.5</td><td class="num">+16.7</td><td class="num">-1021</td><td class="num">3,284</td></tr>
+    </table></div>
+  </section>
+  
+
+  <section class="card how">
+    <h2>How to use this</h2>
+    <p><b>Fair odds are the break-even price.</b> A 85% line is only worth betting if your sportsbook pays <i>better</i> than the fair odds shown (for example −500 is better than −600). Books usually price alt lines with extra margin, so a safe line is often a bad deal even when it covers.</p>
+    <p><b>How the lines are built.</b> The expected margin starts at the Vegas spread and is nudged by the model's disagreement with Vegas. Cover chances come from the actual final margins of historical games with a similar spread, so key numbers like 3 and 7 are priced correctly.</p>
+    <p><b>Safe isn't guaranteed.</b> At 85%, about 1 in 7 of these lines will still lose. Parlaying several "safe" lines multiplies the risk: five 85% legs all win only about 44% of the time.</p>
+  </section>
+
+  <p class="note">For information and entertainment only; not betting or financial advice. Check that sports betting is legal where you are, and never bet more than you can afford to lose. If gambling stops being fun, call or text 1-800-GAMBLER.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NFL Predictor Tracker</title>
+<style>
+
+  .viz-root { --surface-1: #fcfcfb; --page: #f9f9f7; --text-primary: #0b0b0b; --text-secondary: #52514e; --muted: #898781;
+    --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+    --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme=&#34;light&#34;])) .viz-root { --surface-1: #1a1a19; --page: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; }
+  }
+  :root[data-theme=&#34;dark&#34;] .viz-root { --surface-1: #1a1a19; --page: #0d0d0d; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; }
+  svg.chart { width: 100%; height: auto; display: block; font: 12px system-ui, -apple-system, &#34;Segoe UI&#34;, sans-serif; }
+  svg.chart .grid { stroke: var(--grid); stroke-width: 1; }
+  svg.chart .ref { stroke: var(--axis); stroke-width: 1.5; }
+  svg.chart .tick { fill: var(--muted); font-variant-numeric: tabular-nums; }
+  svg.chart .label { fill: var(--text-secondary); }
+  svg.chart .value { fill: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+  svg.chart .line { stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; fill: none; }
+  svg.chart .connector { stroke: var(--axis); stroke-width: 2; }
+  svg.chart .dot { stroke: var(--surface-1); stroke-width: 2; }
+  svg.chart .hover-dot { opacity: 0; }
+  svg.chart .hit:hover .hover-dot { opacity: 1; }
+  svg.chart .hit:hover rect { fill: var(--grid); fill-opacity: .35; }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--text-primary); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1000px; margin: 0 auto; padding: 36px 20px 64px; }
+  a { color: var(--series-1); }
+  h1 { font-size: 30px; letter-spacing: -0.02em; margin: 0 0 4px; }
+  h2 { font-size: 19px; margin: 0 0 4px; }
+  .sub { color: var(--text-secondary); margin: 0 0 14px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 22px 0 24px; }
+  .tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .tile b { display: block; font-size: 28px; letter-spacing: -0.02em; }
+  .tile span { color: var(--text-secondary); font-size: 13px; }
+  section.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; margin: 0 0 20px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 14px 6px 0; border-bottom: 1px solid var(--grid); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 500; }
+  td.wrap { white-space: normal; }
+  .empty { color: var(--text-secondary); padding: 18px 0; }
+  .tag { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 99px; background: var(--grid); }
+  .tag.good { background: color-mix(in srgb, #0ca30c 18%, transparent); color: #067306; }
+  footer { color: var(--muted); font-size: 13px; margin-top: 24px; }
+</style>
+</head>
+<body class="viz-root">
+<style>
+  .site-nav { --nav-bg: #ffffff; --nav-ink: #14171c; --nav-muted: #5f6b7a; --nav-line: #e3e7ec; --nav-accent: #2a78d6;
+    background: var(--nav-bg); border-bottom: 1px solid var(--nav-line); position: sticky; top: 0; z-index: 10;
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  @media (prefers-color-scheme: dark) {
+    .site-nav { --nav-bg: #171b21; --nav-ink: #e8ecf1; --nav-muted: #93a0b0; --nav-line: #2a313a; --nav-accent: #3987e5; }
+  }
+  .site-nav .inner { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 4px; overflow-x: auto; }
+  .site-nav .brand { font-weight: 800; color: var(--nav-ink); text-decoration: none; margin-right: 14px; white-space: nowrap; padding: 12px 0; }
+  .site-nav a.tab { color: var(--nav-muted); text-decoration: none; padding: 12px 10px; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .site-nav a.tab:hover { color: var(--nav-ink); }
+  .site-nav a.tab.active { color: var(--nav-ink); border-bottom-color: var(--nav-accent); font-weight: 600; }
+</style>
+<nav class="site-nav" aria-label="Site">
+  <div class="inner">
+    <a class="brand" href="index.html">🏈 NFL Predictor</a>
+    
+    <a class="tab" href="index.html">This week</a>
+    
+    <a class="tab" href="spreads.html">Safe spreads</a>
+    
+    <a class="tab active" href="tracker.html">Tracker</a>
+    
+    <a class="tab" href="trends.html">Trends</a>
+    
+  </div>
+</nav>
+<main>
+  <h1>NFL Predictor Tracker</h1>
+  <p class="sub">Updated Sep 13, 2026 9:46 AM · Model v1 · Only predictions locked in before kickoff are graded</p>
+
+  
+  <section class="card"><p class="empty">No graded predictions yet. Games are graded automatically once they're final; the record starts with the first game that was predicted before kickoff.</p></section>
+  
+
+  
+
+  
+
+  
+
+  
+
+  <section class="card">
+    <h2>Model improvement log</h2>
+    <p class="sub">After each completed week, a challenger model is searched for and tested on the last 4 seasons plus this season&#39;s completed weeks. It replaces the current model only if it's clearly better; either way the model is retrained on all results.</p>
+    
+    <div class="table-wrap"><table>
+      <tr><th>Date</th><th>Version</th><th>Outcome</th><th>Blind log loss (current → challenger)</th><th>Features in use</th></tr>
+      <tr><td>2026-09-13</td><td>v1</td><td><span class="tag">Kept</span></td>
+        <td>0.6253 → 0.6252</td><td class="wrap">Home field, Elo rating, QB efficiency (EPA/dropback), Recent point differential, QB change, Rest (bye week)</td></tr>
+    </table></div>
+    
+  </section>
+
+  <footer>Data: nflverse. Predictions are estimates, not guarantees.</footer>
+</main>
+</body>
+</html>
