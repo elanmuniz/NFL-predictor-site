@@ -113,7 +113,7 @@
   <a href="startsit.html" aria-current="page">Start / Sit</a>
 </nav>
   <h1>Start / Sit · 2026 Week 1</h1>
-  <p class="sub">Pick 2–4 players you're deciding between. You'll see who to start, each player's chance to outscore the others, and the reasons, using this week's PPR projections, matchups, and range of outcomes. Updated Sep 13, 2026 11:58 AM.</p>
+  <p class="sub">Pick 2–4 players you're deciding between. You'll see who to start, each player's chance to outscore the others, and the reasons, using this week's PPR projections, matchups, and range of outcomes. Updated Sep 13, 2026 12:00 PM.</p>
 
   <section class="card" aria-label="Choose players">
     <form class="picker" id="pickerForm" autocomplete="off">
@@ -229,22 +229,28 @@ function simulate(players, slots) {
 function metric(p) { return state.goal === "floor" ? p.floor : state.goal === "ceiling" ? p.ceiling : p.proj; }
 
 function reasonsFor(a, b) {
-  const r = [];
+  // Factors in favor of starting `a` over `b`, and factors that cut the other way
+  const pros = [], cons = [];
+  const add = (favorsA, text) => (favorsA ? pros : cons).push(text);
   const dp = a.proj - b.proj;
-  if (Math.abs(dp) >= 0.3) r.push(`${dp > 0 ? "Projects" : "Projects only"} ${Math.abs(dp).toFixed(1)} pts ${dp > 0 ? "more" : "less"} than ${b.name}${dp > 0 ? "" : ", but wins on your chosen goal"}.`);
-  if (GRADE_ORDER[a.grade] > GRADE_ORDER[b.grade]) r.push(`Better matchup: ${a.grade} (${a.matchup_pts >= 0 ? "+" : ""}${a.matchup_pts.toFixed(1)} pts) vs. ${b.grade} for ${b.name}.`);
-  else if (GRADE_ORDER[a.grade] < GRADE_ORDER[b.grade]) r.push(`Tougher matchup than ${b.name} (${a.grade} vs. ${b.grade}), already reflected in the projection.`);
+  if (Math.abs(dp) >= 0.3) add(dp > 0, `Projects ${Math.abs(dp).toFixed(1)} pts ${dp > 0 ? "more" : "fewer"} than ${b.name}.`);
+  if (GRADE_ORDER[a.grade] !== GRADE_ORDER[b.grade]) {
+    const better = GRADE_ORDER[a.grade] > GRADE_ORDER[b.grade];
+    add(better, `${better ? "Better" : "Tougher"} matchup: ${a.grade} for ${a.name} vs. ${b.grade} for ${b.name}.`);
+  }
   if (!a.opp_pts && !b.opp_pts && a.implied != null && b.implied != null && Math.abs(a.implied - b.implied) >= 2)
-    r.push(`${a.implied > b.implied ? "Higher" : "Lower"}-scoring team outlook: ${a.team} implied ${a.implied.toFixed(1)} pts vs. ${b.team} ${b.implied.toFixed(1)}.`);
+    add(a.implied > b.implied, `${a.team} is expected to score ${a.implied.toFixed(1)} pts vs. ${b.implied.toFixed(1)} for ${b.team}.`);
   if (a.opp_pts && b.opp_pts && a.implied != null && b.implied != null && Math.abs(a.implied - b.implied) >= 1.5)
-    r.push(`Faces ${a.implied < b.implied ? "a weaker" : "a stronger"} offense: ${a.opp} implied ${a.implied.toFixed(1)} vs. ${b.opp} ${b.implied.toFixed(1)}.`);
-  if (a.floor - b.floor >= 1) r.push(`Safer floor (${a.floor.toFixed(1)} vs. ${b.floor.toFixed(1)} in a bad week).`);
-  if (a.ceiling - b.ceiling >= 1) r.push(`Higher ceiling (${a.ceiling.toFixed(1)} vs. ${b.ceiling.toFixed(1)} in a big week).`);
-  if (a.targets != null && b.targets != null && ["WR", "TE", "RB"].includes(a.pos) && a.targets - b.targets >= 1.5)
-    r.push(`More involved in the passing game (${a.targets.toFixed(1)} vs. ${b.targets.toFixed(1)} targets per game).`);
-  if (b.injury === "Questionable") r.push(`${b.name} is questionable.`);
-  if (b.limited && !a.limited) r.push(`${b.name} has little NFL history, so that projection is less certain.`);
-  return r.slice(0, 5);
+    add(a.implied < b.implied, `Opposing offense expected to score ${a.implied.toFixed(1)} pts vs. ${b.implied.toFixed(1)} against ${b.name}.`);
+  if (Math.abs(a.floor - b.floor) >= 1) add(a.floor > b.floor, `${a.floor > b.floor ? "Safer" : "Lower"} floor: ${a.floor.toFixed(1)} vs. ${b.floor.toFixed(1)} in a bad week.`);
+  if (Math.abs(a.ceiling - b.ceiling) >= 1) add(a.ceiling > b.ceiling, `${a.ceiling > b.ceiling ? "Higher" : "Lower"} ceiling: ${a.ceiling.toFixed(1)} vs. ${b.ceiling.toFixed(1)} in a big week.`);
+  if (a.targets != null && b.targets != null && ["WR", "TE", "RB"].includes(a.pos) && ["WR", "TE", "RB"].includes(b.pos) && Math.abs(a.targets - b.targets) >= 1.5)
+    add(a.targets > b.targets, `${a.targets > b.targets ? "More" : "Fewer"} targets: ${a.targets.toFixed(1)} vs. ${b.targets.toFixed(1)} per game.`);
+  if (b.injury === "Questionable") pros.push(`${b.name} is questionable.`);
+  if (a.injury === "Questionable") cons.push(`${a.name} is questionable.`);
+  if (b.limited && !a.limited) pros.push(`${b.name} has little NFL history, so that projection is less certain.`);
+  if (a.limited && !b.limited) cons.push(`${a.name} has little NFL history, so this projection is less certain.`);
+  return { pros: pros.slice(0, 4), cons: cons.slice(0, 3) };
 }
 
 function distributionChart(players) {
@@ -314,15 +320,19 @@ function render() {
     ? (players.length === 2 ? `${Math.round(sim.best[players.indexOf(lead)] * 100)}% chance to outscore ${esc(runner.name)}`
                             : `${Math.round(sim.best[players.indexOf(lead)] * 100)}% chance to score the most of these ${players.length}`)
     : `${Math.round(sim.topK[players.indexOf(lead)] * 100)}% chance ${esc(lead.name)} finishes in your top ${state.slots}`;
-  const closeCall = state.slots === 1 && players.length === 2 && Math.abs(sim.best[0] - 0.5) < 0.05;
+  const closeCall = state.slots === 1 && players.length === 2 && Math.abs(sim.best[0] - 0.5) < 0.04;
   const posSet = new Set(players.map(p => p.pos));
   const mixedSlots = posSet.size > 1 && ![...posSet].every(p => ["RB", "WR", "TE"].includes(p));
   const played = players.filter(p => p.started);
 
-  let html = `<section class="card"><div class="verdict"><div class="call">Start <span>${startNames.map(esc).join(" & ")}</span></div>
-    <div class="conf">${conf} · optimizing for ${goalText}</div></div>
-    <ul class="reasons">${reasonsFor(lead, runner).map(r => `<li>${esc(r)}</li>`).join("")}</ul>`;
-  if (closeCall) html += `<div class="note">This is close to a coin flip. Go with your gut, or use the matchup and floor/ceiling rows below as a tiebreaker.</div> `;
+  const why = reasonsFor(lead, runner);
+  const callText = closeCall ? `Toss-up <span class="muted" style="font-weight:600">· slight lean</span> <span>${esc(lead.name)}</span>`
+                             : `Start <span>${startNames.map(esc).join(" & ")}</span>`;
+  let html = `<section class="card"><div class="verdict"><div class="call">${callText}</div>
+    <div class="conf">${conf} · optimizing for ${goalText}</div></div>`;
+  if (why.pros.length) html += `<ul class="reasons" aria-label="In favor">${why.pros.map(r => `<li>${esc(r)}</li>`).join("")}</ul>`;
+  if (why.cons.length) html += `<p class="muted" style="margin:10px 0 2px">Working against ${esc(lead.name)}:</p><ul class="reasons" style="margin-top:0" aria-label="Against">${why.cons.map(r => `<li class="muted">${esc(r)}</li>`).join("")}</ul>`;
+  if (closeCall) html += `<div class="note">Too close to call from the numbers. Use your read on the matchup, or pick based on whether you need a safe floor or big upside.</div> `;
   if (mixedSlots) html += `<div class="note">These players are at different positions. Make sure they can fill the same lineup spot.</div> `;
   if (played.length) html += `<div class="note">${played.map(p => esc(p.name)).join(", ")} ${played.length > 1 ? "have" : "has"} already played; the projection shown was locked before kickoff.</div>`;
   html += `</section>`;
