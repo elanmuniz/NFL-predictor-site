@@ -89,13 +89,13 @@
 </style>
 <nav class="site-nav" aria-label="Site">
   <div class="inner">
-    <a class="brand" href="index.html?v=202609131801">🏈 NFL Predictor</a>
+    <a class="brand" href="index.html?v=202609131806">🏈 NFL Predictor</a>
     
-    <a class="tab" href="index.html?v=202609131801">This week</a>
+    <a class="tab" href="index.html?v=202609131806">This week</a>
     
-    <a class="tab" href="spreads.html?v=202609131801">Safe spreads</a>
+    <a class="tab" href="spreads.html?v=202609131806">Safe spreads</a>
     
-    <a class="tab active" href="fantasy.html?v=202609131801">Fantasy</a>
+    <a class="tab active" href="fantasy.html?v=202609131806">Fantasy</a>
     
   </div>
 </nav>
@@ -106,11 +106,11 @@
   .subtabs a[aria-current="page"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.12); }
 </style>
 <nav class="subtabs" aria-label="Fantasy">
-  <a href="fantasy.html?v=202609131801" aria-current="page">Rankings</a>
-  <a href="startsit.html?v=202609131801">Start / Sit</a>
+  <a href="fantasy.html?v=202609131806" aria-current="page">Rankings</a>
+  <a href="startsit.html?v=202609131806">Start / Sit</a>
 </nav>
   <h1>Fantasy Rankings · 2026 Week 1</h1>
-  <p class="sub"><b>PPR scoring</b>, plus kickers and team defenses. Weekly projections from each player's recent production and usage, adjusted for matchup: what the opposing defense has allowed to the position (versus what those players normally score), the team's Vegas-implied points, and home field. Updated Sep 13, 2026 6:02 PM.</p>
+  <p class="sub"><b>PPR scoring</b>, plus kickers and team defenses. Weekly projections from each player's recent production and usage, adjusted for matchup: what the opposing defense has allowed to the position (versus what those players normally score), the team's Vegas-implied points, and home field. Updated Sep 13, 2026 6:07 PM.</p>
 
   <div class="tiles">
     <div class="tile"><b>0.36</b><span>QB weekly ranking accuracy (1.0 = perfect) vs. 0.34 for a simple recent average · 2019–2025 backtest</span></div><div class="tile"><b>0.46</b><span>RB weekly ranking accuracy (1.0 = perfect) vs. 0.44 for a simple recent average · 2019–2025 backtest</span></div><div class="tile"><b>0.38</b><span>WR weekly ranking accuracy (1.0 = perfect) vs. 0.35 for a simple recent average · 2019–2025 backtest</span></div><div class="tile"><b>0.35</b><span>TE weekly ranking accuracy (1.0 = perfect) vs. 0.30 for a simple recent average · 2019–2025 backtest</span></div><div class="tile"><b>0.18</b><span>K weekly ranking accuracy (1.0 = perfect) vs. 0.05 for a simple recent average · 2019–2025 backtest</span></div><div class="tile"><b>0.27</b><span>DST weekly ranking accuracy (1.0 = perfect) vs. 0.06 for a simple recent average · 2019–2025 backtest</span></div>
@@ -163,7 +163,7 @@
     <p><b>Matchup grade</b> compares the projection with the same player facing an average defense, with an average team total, at a neutral site. The change is measured against at least a typical fantasy starter's score (16 pts QB, 12 RB/WR, 9 TE, 8 K, 7 D/ST), so backups can't earn big grades from tiny swings: A+ is +15% or more, A +8%, B +3%, C roughly neutral, D −3%, F −8% or worse. <b>Hide backups</b> (on by default) shows depth-chart starters plus anyone ranked as a fantasy starter. The rank shows how that defense stacks up against the position (1st = allows the most points above expectation). Early in the season, defense data leans on last year and is pulled toward average.</p>
     <p><b>Team pts</b> is the Vegas-implied total for the player's team (for a D/ST, the <i>opponent's</i> implied points — fewer is better). <b>Q</b> = questionable (Out and Doubtful players are left off). <b>New</b> = little NFL history, so the projection leans on what players at that depth-chart spot usually score. Once a game kicks off, its projections are locked and <b>Actual</b> fills in after the final whistle.</p>
     <p><b>Kickers and D/ST</b> have their own tabs (they're left out of Overall and FLEX) and use standard scoring. Kickers: PAT +1, FG 0–39 yds +3, 40–49 +4, 50+ +5, missed FG or PAT −1. D/ST: sack +1, interception or fumble recovery +2, safety or blocked kick +2, defensive or return TD +6, and points allowed 0 → +10, 1–6 → +7, 7–13 → +4, 14–20 → +1, 21–27 → 0, 28–34 → −1, 35+ → −4. A kicker's matchup is the opposing defense and the game's venue (domes help); a D/ST's matchup is the opposing offense, and its <b>Opp</b> number is how many points that offense is expected to score.</p>
-    <p class="muted">Download: <a href="data/2026_week01_fantasy.csv?v=202609131801">rankings CSV</a></p>
+    <p class="muted">Download: <a href="data/2026_week01_fantasy.csv?v=202609131806">rankings CSV</a></p>
   </section>
 </main>
 <script>
@@ -207,7 +207,7 @@ function render() {
         <span class="range-label">${p.floor.toFixed(1)} – ${p.ceiling.toFixed(1)}</span>`;
     const tags = statusTag(p) + (p.limited && p.available ? '<span class="tag new" title="Limited NFL history">New</span>' : "");
     const actual = p.actual == null ? '<span class="muted">—</span>' :
-                   `<span class="actual ${p.actual >= p.proj ? "hit" : "miss"}">${p.actual.toFixed(1)}</span>` +
+                   `<span class="actual ${!p.available ? "" : p.actual >= p.proj ? "hit" : "miss"}">${p.actual.toFixed(1)}</span>` +
                    (p.provisional ? '<span class="unofficial" title="From the ESPN box score; replaced by official stats when published">unofficial</span>' : "");
     const season = p.season_games ? `<b>${p.season_ppg.toFixed(1)}</b> pts/g this season (${p.season_games} g)<br>` : '<span>No games this season</span><br>';
     const opprank = p.opp_rank ? `<br><small class="muted">${ordinal(p.opp_rank)} vs ${p.pos === "DST" ? "D/ST" : p.pos}</small>` : "";
