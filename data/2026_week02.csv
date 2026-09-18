@@ -1,8 +1,8 @@
 game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win_pct,vegas_win_pct,spread,result
 2026_02_DET_BUF,2026-09-17 20:15:00,BUF,DET,home,Josh Allen,62.4,68.6,68.1,-5.5,W
 2026_02_DET_BUF,2026-09-17 20:15:00,DET,BUF,away,Jared Goff,37.6,31.4,31.9,5.5,L
-2026_02_CAR_ATL,2026-09-20 13:00:00,ATL,CAR,home,Michael Penix Jr.,58.3,43.4,42.8,2.5,
-2026_02_CAR_ATL,2026-09-20 13:00:00,CAR,ATL,away,Bryce Young,41.7,56.6,57.2,-2.5,
+2026_02_CAR_ATL,2026-09-20 13:00:00,ATL,CAR,home,Michael Penix Jr.,58.3,41.3,40.7,2.5,
+2026_02_CAR_ATL,2026-09-20 13:00:00,CAR,ATL,away,Bryce Young,41.7,58.7,59.3,-2.5,
 2026_02_CIN_HOU,2026-09-20 13:00:00,HOU,CIN,home,C.J. Stroud,60.4,56.9,56.3,-2.5,
 2026_02_CIN_HOU,2026-09-20 13:00:00,CIN,HOU,away,Joe Burrow,39.6,43.1,43.7,2.5,
 2026_02_CLE_TB,2026-09-20 13:00:00,TB,CLE,home,Baker Mayfield,70.9,79.4,78.7,-8.5,
@@ -27,7 +27,7 @@ game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win
 2026_02_SEA_ARI,2026-09-20 16:25:00,SEA,ARI,away,Sam Darnold,68.0,66.7,65.7,-3.5,
 2026_02_WAS_DAL,2026-09-20 16:25:00,DAL,WAS,home,Dak Prescott,60.6,66.2,65.7,-3.5,
 2026_02_WAS_DAL,2026-09-20 16:25:00,WAS,DAL,away,Jayden Daniels,39.4,33.8,34.3,3.5,
-2026_02_IND_KC,2026-09-20 20:20:00,KC,IND,home,Patrick Mahomes,70.3,72.3,71.4,-6.5,
-2026_02_IND_KC,2026-09-20 20:20:00,IND,KC,away,Daniel Jones,29.7,27.7,28.6,6.5,
+2026_02_IND_KC,2026-09-20 20:20:00,KC,IND,home,Patrick Mahomes,70.3,71.9,71.0,-6.5,
+2026_02_IND_KC,2026-09-20 20:20:00,IND,KC,away,Daniel Jones,29.7,28.1,29.0,6.5,
 2026_02_NYG_LA,2026-09-21 20:15:00,LA,NYG,home,Matthew Stafford,69.7,76.4,75.7,-7.0,
 2026_02_NYG_LA,2026-09-21 20:15:00,NYG,LA,away,Jaxson Dart,30.3,23.6,24.3,7.0,
