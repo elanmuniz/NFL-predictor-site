@@ -1,8 +1,8 @@
 game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win_pct,vegas_win_pct,spread,result
 2026_02_DET_BUF,2026-09-17 20:15:00,BUF,DET,home,Josh Allen,62.4,68.6,68.1,-5.5,W
 2026_02_DET_BUF,2026-09-17 20:15:00,DET,BUF,away,Jared Goff,37.6,31.4,31.9,5.5,L
-2026_02_CAR_ATL,2026-09-20 13:00:00,ATL,CAR,home,Cooper Rush,58.0,42.3,41.7,2.5,
-2026_02_CAR_ATL,2026-09-20 13:00:00,CAR,ATL,away,Bryce Young,42.0,57.7,58.3,-2.5,
+2026_02_CAR_ATL,2026-09-20 13:00:00,ATL,CAR,home,Tua Tagovailoa,58.0,42.3,41.7,2.5,L
+2026_02_CAR_ATL,2026-09-20 13:00:00,CAR,ATL,away,Bryce Young,42.0,57.7,58.3,-2.5,W
 2026_02_CIN_HOU,2026-09-20 13:00:00,HOU,CIN,home,C.J. Stroud,60.4,57.8,57.2,-3.0,
 2026_02_CIN_HOU,2026-09-20 13:00:00,CIN,HOU,away,Joe Burrow,39.6,42.2,42.8,3.0,
 2026_02_CLE_TB,2026-09-20 13:00:00,TB,CLE,home,Baker Mayfield,70.9,78.4,77.7,-8.5,
@@ -13,8 +13,8 @@ game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win
 2026_02_MIN_CHI,2026-09-20 13:00:00,MIN,CHI,away,Carson Wentz,39.8,35.1,35.5,4.5,W
 2026_02_NO_BAL,2026-09-20 13:00:00,BAL,NO,home,Lamar Jackson,73.2,76.0,75.1,-8.5,L
 2026_02_NO_BAL,2026-09-20 13:00:00,NO,BAL,away,Tyler Shough,26.8,24.0,24.9,8.5,W
-2026_02_PHI_TEN,2026-09-20 13:00:00,TEN,PHI,home,Cam Ward,26.5,25.6,26.6,7.0,
-2026_02_PHI_TEN,2026-09-20 13:00:00,PHI,TEN,away,Jalen Hurts,73.5,74.4,73.4,-7.0,
+2026_02_PHI_TEN,2026-09-20 13:00:00,TEN,PHI,home,Cam Ward,26.5,25.6,26.6,7.0,L
+2026_02_PHI_TEN,2026-09-20 13:00:00,PHI,TEN,away,Jalen Hurts,73.5,74.4,73.4,-7.0,W
 2026_02_PIT_NE,2026-09-20 13:00:00,NE,PIT,home,Drake Maye,68.4,67.3,66.4,-4.5,W
 2026_02_PIT_NE,2026-09-20 13:00:00,PIT,NE,away,Aaron Rodgers,31.6,32.7,33.6,4.5,L
 2026_02_JAX_DEN,2026-09-20 16:05:00,DEN,JAX,home,Bo Nix,44.4,56.8,57.2,-2.5,
