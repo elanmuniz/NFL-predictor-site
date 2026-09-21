@@ -29,5 +29,5 @@ game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win
 2026_02_WAS_DAL,2026-09-20 16:25:00,WAS,DAL,away,Jayden Daniels,39.4,33.8,34.3,3.5,L
 2026_02_IND_KC,2026-09-20 20:20:00,KC,IND,home,Patrick Mahomes,70.3,70.5,69.6,-6.0,W
 2026_02_IND_KC,2026-09-20 20:20:00,IND,KC,away,Daniel Jones,29.7,29.5,30.4,6.0,L
-2026_02_NYG_LA,2026-09-21 20:15:00,LA,NYG,home,Matthew Stafford,69.7,72.2,71.4,-6.5,
-2026_02_NYG_LA,2026-09-21 20:15:00,NYG,LA,away,Jaxson Dart,30.3,27.8,28.6,6.5,
+2026_02_NYG_LA,2026-09-21 20:15:00,LA,NYG,home,Matthew Stafford,69.7,72.6,71.8,-6.5,
+2026_02_NYG_LA,2026-09-21 20:15:00,NYG,LA,away,Jaxson Dart,30.3,27.4,28.2,6.5,
