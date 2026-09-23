@@ -1,6 +1,6 @@
 game_id,kickoff,team,opponent,home_away,expected_qb,analytics_win_pct,market_win_pct,vegas_win_pct,spread,result
-2026_03_ATL_GB,2026-09-24 20:15:00,GB,ATL,home,Jordan Love,75.9,70.9,69.6,-5.5,
-2026_03_ATL_GB,2026-09-24 20:15:00,ATL,GB,away,Michael Penix Jr.,24.1,29.1,30.4,5.5,
+2026_03_ATL_GB,2026-09-24 20:15:00,GB,ATL,home,Jordan Love,75.9,70.4,69.1,-5.5,
+2026_03_ATL_GB,2026-09-24 20:15:00,ATL,GB,away,Michael Penix Jr.,24.1,29.6,30.9,5.5,
 2026_03_CAR_CLE,2026-09-27 13:00:00,CLE,CAR,home,Deshaun Watson,46.3,42.7,42.8,2.5,
 2026_03_CAR_CLE,2026-09-27 13:00:00,CAR,CLE,away,Bryce Young,53.7,57.3,57.2,-2.5,
 2026_03_CIN_PIT,2026-09-27 13:00:00,PIT,CIN,home,Aaron Rodgers,43.3,36.7,36.9,3.5,
